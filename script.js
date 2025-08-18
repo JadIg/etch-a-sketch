@@ -1,6 +1,7 @@
 // from gridSize we will use the value to create a grid of divs
 const gridSize = 16; // Default grid size
 const grid = document.querySelector('.grid');
+const color = document.querySelector('#color'); // Color input for changing grid item color
 // Function to create the grid
 function createGrid(size) {
     grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -10,7 +11,7 @@ function createGrid(size) {
         const div = document.createElement('div');
         div.classList.add('grid-item');
         div.addEventListener('mouseover', () => {
-            div.style.backgroundColor = 'black'; // Change color on hover
+            div.style.backgroundColor = color.value; // Change background color on hover
         });
         grid.appendChild(div);
         grid.style.width = size *20 + 'px'; // Adjust grid width based on size
