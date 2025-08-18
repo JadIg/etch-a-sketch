@@ -2,6 +2,8 @@
 const gridSize = 16; // Default grid size
 const grid = document.querySelector('.grid');
 const color = document.querySelector('#color'); // Color input for changing grid item color
+
+
 // Function to create the grid
 function createGrid(size) {
     grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -18,20 +20,41 @@ function createGrid(size) {
         grid.style.height = size *20 + 'px'; // Adjust grid height based on size
     }
 }  
+
+
 // Initial grid creation
 createGrid(gridSize);
+
+
 // Event listener for the button to change grid size
-const button = document.querySelector('button');
-button.addEventListener('click', () => {
-    const newSize = prompt('Enter new grid size (1-100):');
-    const size = parseInt(newSize, 10);
-    // remove existing grid items
-    while (grid.firstChild) {
-        grid.removeChild(grid.firstChild);
+const gridSizeButton = document.querySelector('#setGridSize');
+gridSizeButton.addEventListener('click', () => { 
+    const newSize = document.querySelector('#gridSize').value; // Get the new grid size from input
+    if (newSize < 1 || newSize > 100) {
+        alert('Please enter a number between 1 and 100');
+        return;
     }
-    if (size >= 1 && size <= 100) {
-        createGrid(size);
-    } else {
-        alert('Please enter a valid number between 1 and 100.');
-    }
+    grid.innerHTML = ''; // Clear the existing grid
+    createGrid(newSize); // Create a new grid with the new size
 });
+// Event listener for the clear button to reset the grid
+const clearButton = document.querySelector('#clear');
+clearButton.addEventListener('click', () => {
+    const gridItems = document.querySelectorAll('.grid-item');
+    gridItems.forEach(item => {
+        item.style.backgroundColor = 'white'; // Reset background color to white
+    });
+});
+
+// Event
+
+const randomColorButton = document.querySelector('#randomColor');
+randomColorButton.addEventListener('click', () => {
+    const gridItems = document.querySelectorAll('.grid-item');
+    gridItems.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16); // Generate a random color
+            item.style.backgroundColor = randomColor; // Change background color to random color on hover
+        });
+    });
+})
